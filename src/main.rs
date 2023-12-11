@@ -4,9 +4,7 @@ use itertools::Itertools;
 async fn main() -> color_eyre::Result<()> {
     color_eyre::install()?;
 
-    let pool = sqlx::mysql::MySqlPoolOptions::new()
-        .connect(&std::env::var("DATABASE_URL")?)
-        .await?;
+    let pool = sqlx::MySqlPool::connect(&std::env::var("DATABASE_URL")?).await?;
 
     // With 5_000_000 fields (10_000_000 args):
     //  - Connection reset by peer (os error 54) on MySQL 8.0.35
